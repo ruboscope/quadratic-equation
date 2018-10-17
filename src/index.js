@@ -1,12 +1,16 @@
 module.exports = function solveEquation(equation) {
   // your implementation
-  var equationArray = equation.split(' ');
-  var quadrCoef = equationArray[0];
-  var linearCoef = equationArray[3] + equationArray[4];
-  var freeCoef = equationArray[equationArray.length - 2] + equationArray[equationArray.length-1];
-  var sqrtDiscr = Math.sqrt(linearCoef * linearCoef - 4 * quadrCoef * freeCoef);
-  var results = [Math.round(((-1) * linearCoef + sqrtDiscr) / (2 * quadrCoef)), Math.round(((-1) * linearCoef - sqrtDiscr) / (2 * quadrCoef))];
-  return results.sort(function (a, b) {
-    return a - b;
-  }); 
+
+  const numbers = equation.match(/(-?|\+\s|-\s)[^\^][0-9]+/g).map(item => Number(item.replace(/\s/g, '')));
+
+  const [a, b, c] = numbers;
+
+  const D = Math.pow(b, 2) - 4 * a * c;
+
+  const res1 = (-b + Math.sqrt(D)) / (2 * a);
+  const res2 = (-b - Math.sqrt(D)) / (2 * a);
+
+  const result = [Math.round(res1), Math.round(res2)];
+
+  return result.sort((a, b) => a - b);
 }
